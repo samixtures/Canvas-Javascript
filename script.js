@@ -48,38 +48,50 @@ console.log(c);
 
 // }
 
-function Circle(x, y) {
-    this.x = x;
-    this.y = x;
+//Circle Object
+function Circle(x, y, dx, dy, radius, col1, col2, col3){
     this.draw = function() {
         c.beginPath();
+        c.strokeStyle = `rgba(${col1}, ${col2}, ${col3}, 1)`;
         c.arc(x, y, radius, 0, 2*Math.PI, true);
+        c.fill();
         c.stroke();
+    }
+    this.update = function() {
+        x+=dx;
+        y+=dy;
+        if (x + radius> innerWidth || x - radius < 0) dx=-dx;
+        if (y + radius > innerHeight || y - radius < 0) dy=-dy;
+
+        this.draw();
     }
 }
 
-let circle = new Circle(200, 200);
+//Create Array of Circles
+let circleArray = [];
+for (let i = 0; i < 100; i++) {
+    let radius = 60;
+    let x = Math.random()*(window.innerWidth-radius*2)+radius, y = Math.random()*(window.innerHeight-radius*2)+radius;
+    let dx = (Math.random()-0.5) * 3, dy = (Math.random()-0.5) * 3;
+
+    //Colors
+    let col1 = Math.random() * 255, col2 = Math.random() * 255, col3 = Math.random() * 255;
 
 
-let x = Math.random()*window.innerWidth, y = Math.random()*window.innerHeight;
-let dx = (Math.random()-0.5) * 10, dy = (Math.random()-0.5) * 10;
-let radius = 60;
+    circleArray.push(new Circle(x, y, dx, dy, radius, col1, col2, col3));
+}
+
+
+
+
+//Animate Circles from the Array
 function animate() {
     requestAnimationFrame(animate)
     c.clearRect(0, 0, innerWidth, innerHeight);
 
-    circle.draw();
-
-    c.beginPath();
-    c.arc(x, y, radius, 0, 2*Math.PI, true);
-    c.stroke();
-
-    
-    x+=dx;
-    y+=dy;
-
-    if (x + radius> innerWidth || x - radius < 0) dx=-dx;
-    if (y + radius > innerHeight || y - radius < 0) dy=-dy;
+    for(let i = 0; i < circleArray.length; i++) {
+        circleArray[i].update();
+    }
 
 }
 animate();

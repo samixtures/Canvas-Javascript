@@ -75,7 +75,7 @@ function Circle(x, y, dx, dy, radius, col1, col2, col3){
 //Create Array of Circles
 
 let circleArray = [];
-for (let i = 0; i < 1000; i++) {
+for (let i = 0; i < 100; i++) {
     let radius = 60;
     let x = Math.random()*(window.innerWidth-radius*2)+radius, y = Math.random()*(window.innerHeight-radius*2)+radius;
     let dx = (Math.random()-0.5) * 3, dy = (Math.random()-0.5) * 3;
